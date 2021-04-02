@@ -1,11 +1,10 @@
 import { useState } from "react";
+import { SERVER_URL } from "../App";
 
 type UseAuthReturnType = [boolean,string|null,any,(name:string,password:string,isSignIn:boolean)=>void]
 
 type SetNameType = (name:string)=>void
 type SetPasswordType = SetNameType
-
-const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export const useAuth = (setName:SetNameType,setPassword:SetPasswordType):UseAuthReturnType=>{
 

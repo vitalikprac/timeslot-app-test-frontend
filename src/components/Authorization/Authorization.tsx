@@ -1,10 +1,9 @@
 import React, {ChangeEvent, FormEvent, useContext, useEffect, useState} from 'react';
-import classes from './Authorization.module.scss'
-import {Alert, Button, Form, Spinner} from "react-bootstrap";
-import {useAuth} from "../../hooks/useAuth";
 import { Link, useHistory } from 'react-router-dom';
-import {TokenContext} from "../../TokenContext";
-
+import {Alert, Button, Form, Spinner} from "react-bootstrap";
+import classes from './Authorization.module.scss'
+import {useAuth} from "../../hooks/useAuth";
+import {TokenContext} from "../../context/TokenContext";
 
 interface AuthorizationProp{
     isSignIn: boolean

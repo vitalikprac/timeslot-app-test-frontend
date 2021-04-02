@@ -4,37 +4,32 @@ import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import {SelectTimeSlot, WeekHours} from '../../components/SelectTimeSlot/SelectTimeSlot';
-import {useFetchAsync} from "../../hooks/useFetchAsync";
-import {TokenContext} from "../../TokenContext";
+import {TokenContext} from "../../context/TokenContext";
 import classes from './Home.module.scss';
+import {fetchGetTimeSlot, fetchPostTimeSlot} from "../../util/util";
+
 
 
 const Home = () => {
 
     const history = useHistory();
-    const [loading,error,data,fetchAsync] = useFetchAsync();
     const {setToken,token} = useContext(TokenContext);
     const [timeSlot,setTimeSlot] = useState({});
 
-    const onSaveSelectTimeSlot = (weekHours:WeekHours)=>{
-        fetchAsync(weekHours,token!);
-    }
-
     useEffect(()=>{
-        (async ()=>{
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/timeslot`,{
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+        (async()=>{
+            if (token) {
+                const {timeSlot} = await fetchGetTimeSlot(token);
+                if (timeSlot) {
+                    setTimeSlot(timeSlot);
                 }
-            });
-            const {timeSlot} = await response.json();
-            if (timeSlot){
-                setTimeSlot(timeSlot);
             }
         })()
-    },[])
+    },[token])
+
+    const onSaveSelectTimeSlot = (weekHours:WeekHours)=>{
+        fetchPostTimeSlot(token!,weekHours);
+    }
 
     const onClickSignOut = ()=>{
         localStorage.removeItem('token');
