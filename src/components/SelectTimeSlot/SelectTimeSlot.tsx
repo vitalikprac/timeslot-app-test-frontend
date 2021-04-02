@@ -53,7 +53,7 @@ const SelectTimeSlot = ({timeSlot, onSave, color = 'red'}: SelectTimeSlotProp) =
         setFilling(true);
         const target = e.target as HTMLTableDataCellElement;
         const [x, y] = getXYFromDataCellElement(target)
-        if (x && y) {
+        if (x!=null && y!=null) {
             const localColor = target.style.backgroundColor === color ? NONE_COLOR : color;
             setFillColor(localColor);
             fillArea(cells, {x, y}, {x, y}, localColor);
@@ -67,7 +67,7 @@ const SelectTimeSlot = ({timeSlot, onSave, color = 'red'}: SelectTimeSlotProp) =
     const onMouseOver = (e: MouseEvent<HTMLTableElement>) => {
         const target = e.target as HTMLTableDataCellElement;
         const [x, y] = getXYFromDataCellElement(target)
-        if (x && y && filling) {
+        if (x!=null && y!=null && filling) {
             fillArea(cells, fromPoint, {x, y}, fillColor);
         }
     }
